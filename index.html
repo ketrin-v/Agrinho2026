@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agro Forte | Futuro Sustentável</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header / Navegação -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo">
+                <span class="logo-icon">🌾</span>
+                    <span class="logo-text">Agro<span class="highlight">Forte</span></span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#praticas">Práticas</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title animate-text">Agro Forte,<br><span>Futuro Sustentável</span></h1>
+            <p class="hero-subtitle">Unindo tecnologia e respeito à terra para alimentar o mundo de forma consciente</p>
+            <button class="cta-button" id="saibaMaisBtn">Saiba Mais</button>
+        </div>
+        <div class="hero-stats">
+            <div class="stat">
+                <span class="stat-number" data-target="85">0</span>
+                <span class="stat-label">% de redução de água</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" data-target="40">0</span>
+                <span class="stat-label">+ milhões de hectares preservados</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number" data-target="100">0</span>
+                <span class="stat-label">% energia renovável</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Section -->
+    <section id="sobre" class="sobre">
+        <div class="container">
+            <h2 class="section-title">Agricultura que <span class="highlight">transforma</span></h2>
+            <div class="sobre-grid">
+                <div class="sobre-texto">
+                    <p>Acreditamos que é possível produzir mais com menos, respeitando os ciclos da natureza e construindo um legado para as próximas gerações.</p>
+                    <p>Com tecnologias de ponta e práticas regenerativas, estamos revolucionando o campo brasileiro, unindo produtividade e conservação ambiental.</p>
+                    <div class="certificados">
+                        <div class="cert">
+                            <span>🌱</span>
+                            <span>Carbono Neutro</span>
+                        </div>
+                        <div class="cert">
+                            <span>💧</span>
+                            <span>Uso Racional da Água</span>
+                        </div>
+                        <div class="cert">
+                            <span>🐝</span>
+                            <span>Biodiversidade</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sobre-image">
+                    <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=400&fit=crop" alt="Agricultura sustentável">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Práticas Sustentáveis -->
+    <section id="praticas" class="praticas">
+        <div class="container">
+            <h2 class="section-title">Práticas que <span class="highlight">fazem a diferença</span></h2>
+            <div class="cards-container" id="cardsContainer">
+                <!-- Cards serão inseridos via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter / Contato -->
+    <section id="contato" class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Junte-se a essa <span class="highlight">revolução verde</span></h2>
+                <p>Receba novidades, dicas sustentáveis e cases de sucesso diretamente no seu e-mail.</p>
+                <form id="newsletterForm" class="newsletter-form">
+                    <input type="email" id="emailInput" placeholder="Seu melhor e-mail" required>
+                    <button type="submit">Inscrever-se</button>
+                </form>
+                <div id="formMessage" class="form-message"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-icon">🌾</span>
+                    <span>AgroForte Sustentável</span>
+                </div>
+                <p class="footer-text">Cultivando o amanhã, respeitando o hoje.</p>
+                <p class="footer-copy">© 2025 Agro Forte - Todos os direitos reservados</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
