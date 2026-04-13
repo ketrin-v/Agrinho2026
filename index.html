@@ -3,107 +3,237 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agro Forte | Futuro Sustentável</title>
+    <title>Agro Forte | Sustentabilidade no Campo</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-    <!-- Header / Navegação -->
-    <header class="header">
-        <nav class="navbar">
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <div class="loader"></div>
+        <p>Carregando...</p>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container header-container">
             <div class="logo">
-                <span class="logo-icon">🌾</span>
-                    <span class="logo-text">Agro<span class="highlight">Forte</span></span>
+                <i class="fas fa-tractor"></i>
+                <h1>Agro<span>Forte</span></h1>
             </div>
-            <ul class="nav-menu">
-                <li><a href="#home">Início</a></li>
-                <li><a href="#sobre">Sobre</a></li>
-                <li><a href="#praticas">Práticas</a></li>
-                <li><a href="#contato">Contato</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li><a href="#inicio" class="nav-link active">Início</a></li>
+                    <li><a href="#sobre" class="nav-link">Sobre</a></li>
+                    <li><a href="#solucoes" class="nav-link">Soluções</a></li>
+                    <li><a href="#impacto" class="nav-link">Impacto</a></li>
+                    <li><a href="#blog" class="nav-link">Blog</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-        </nav>
+        </div>
     </header>
 
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-nav-list">
+            <li><a href="#inicio" class="mobile-nav-link">Início</a></li>
+            <li><a href="#sobre" class="mobile-nav-link">Sobre</a></li>
+            <li><a href="#solucoes" class="mobile-nav-link">Soluções</a></li>
+            <li><a href="#impacto" class="mobile-nav-link">Impacto</a></li>
+            <li><a href="#blog" class="mobile-nav-link">Blog</a></li>
+        </ul>
+    </div>
+
     <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title animate-text">Agro Forte,<br><span>Futuro Sustentável</span></h1>
-            <p class="hero-subtitle">Unindo tecnologia e respeito à terra para alimentar o mundo de forma consciente</p>
-            <button class="cta-button" id="saibaMaisBtn">Saiba Mais</button>
+    <section id="inicio" class="hero">
+        <div class="hero-bg"></div>
+        <div class="container hero-container">
+            <div class="hero-content">
+                <span class="hero-badge">🌱 Inovação Sustentável</span>
+                <h1 class="hero-title">Agro Forte,<br><span>Futuro Sustentável</span></h1>
+                <p class="hero-description">Revolucionando o agronegócio com práticas que respeitam o planeta e alimentam o mundo de forma inteligente e responsável.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" id="explorarBtn">
+                        Explorar Soluções <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="btn btn-outline" id="videoBtn">
+                        <i class="fas fa-play"></i> Ver Vídeo
+                    </button>
+                </div>
+            </div>
+            <div class="hero-stats-card">
+                <div class="stat-item">
+                    <div class="stat-icon">🌾</div>
+                    <div>
+                        <h3 id="stat1">0</h3>
+                        <p>Hectares Preservados</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">💧</div>
+                    <div>
+                        <h3 id="stat2">0</h3>
+                        <p>Economia de Água</p>
+                    </div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">🌿</div>
+                    <div>
+                        <h3 id="stat3">0</h3>
+                        <p>Redução de CO₂</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="hero-stats">
-            <div class="stat">
-                <span class="stat-number" data-target="85">0</span>
-                <span class="stat-label">% de redução de água</span>
-            </div>
-            <div class="stat">
-                <span class="stat-number" data-target="40">0</span>
-                <span class="stat-label">+ milhões de hectares preservados</span>
-            </div>
-            <div class="stat">
-                <span class="stat-number" data-target="100">0</span>
-                <span class="stat-label">% energia renovável</span>
-            </div>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path>
+            </svg>
         </div>
     </section>
 
     <!-- Sobre Section -->
     <section id="sobre" class="sobre">
         <div class="container">
-            <h2 class="section-title">Agricultura que <span class="highlight">transforma</span></h2>
+            <div class="sobre-header">
+                <span class="section-tag">Quem Somos</span>
+                <h2 class="section-title">Produzindo mais,<br>com <span class="gradient-text">menos impacto</span></h2>
+            </div>
             <div class="sobre-grid">
-                <div class="sobre-texto">
-                    <p>Acreditamos que é possível produzir mais com menos, respeitando os ciclos da natureza e construindo um legado para as próximas gerações.</p>
-                    <p>Com tecnologias de ponta e práticas regenerativas, estamos revolucionando o campo brasileiro, unindo produtividade e conservação ambiental.</p>
-                    <div class="certificados">
-                        <div class="cert">
-                            <span>🌱</span>
-                            <span>Carbono Neutro</span>
+                <div class="sobre-text">
+                    <p>A AgroForte nasceu com uma missão clara: transformar o agronegócio brasileiro através da tecnologia aliada à sustentabilidade. Acreditamos que é possível aumentar a produtividade enquanto regeneramos o meio ambiente.</p>
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-leaf"></i>
+                            <div>
+                                <h4>Agricultura Regenerativa</h4>
+                                <p>Técnicas que restauram a saúde do solo e aumentam a biodiversidade.</p>
+                            </div>
                         </div>
-                        <div class="cert">
-                            <span>💧</span>
-                            <span>Uso Racional da Água</span>
+                        <div class="feature">
+                            <i class="fas fa-microchip"></i>
+                            <div>
+                                <h4>Tecnologia de Precisão</h4>
+                                <p>Drones, IoT e IA para otimizar recursos e reduzir desperdícios.</p>
+                            </div>
                         </div>
-                        <div class="cert">
-                            <span>🐝</span>
-                            <span>Biodiversidade</span>
+                        <div class="feature">
+                            <i class="fas fa-hand-holding-heart"></i>
+                            <div>
+                                <h4>Certificação Socioambiental</h4>
+                                <p>Garantia de origem responsável e comércio justo.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="sobre-image">
-                    <img src="https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=400&fit=crop" alt="Agricultura sustentável">
+                <div class="sobre-stats">
+                    <div class="stat-circle">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" class="circle-bg"/>
+                            <circle cx="50" cy="50" r="45" class="circle-progress" style="stroke-dasharray: 283; stroke-dashoffset: 85;"/>
+                        </svg>
+                        <div class="stat-circle-content">
+                            <span class="percent">70%</span>
+                            <span>menos água</span>
+                        </div>
+                    </div>
+                    <div class="stat-circle">
+                        <svg viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="45" class="circle-bg"/>
+                            <circle cx="50" cy="50" r="45" class="circle-progress" style="stroke-dasharray: 283; stroke-dashoffset: 141;"/>
+                        </svg>
+                        <div class="stat-circle-content">
+                            <span class="percent">50%</span>
+                            <span>+ produtividade</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Práticas Sustentáveis -->
-    <section id="praticas" class="praticas">
+    <!-- Soluções Section -->
+    <section id="solucoes" class="solucoes">
         <div class="container">
-            <h2 class="section-title">Práticas que <span class="highlight">fazem a diferença</span></h2>
-            <div class="cards-container" id="cardsContainer">
-                <!-- Cards serão inseridos via JavaScript -->
+            <div class="solucoes-header">
+                <span class="section-tag">Nossas Soluções</span>
+                <h2 class="section-title">Tecnologia e natureza<br>em <span class="gradient-text">harmonia</span></h2>
+            </div>
+            <div class="solucoes-grid" id="solucoesGrid"></div>
+        </div>
+    </section>
+
+    <!-- Impacto Section -->
+    <section id="impacto" class="impacto">
+        <div class="container">
+            <div class="impacto-header">
+                <span class="section-tag">Resultados Reais</span>
+                <h2 class="section-title">Nosso impacto no<br><span class="gradient-text">planeta e na produção</span></h2>
+            </div>
+            <div class="impacto-grid">
+                <div class="impacto-card" data-value="1200">
+                    <i class="fas fa-tree"></i>
+                    <h3 class="impacto-number">0</h3>
+                    <p>Árvores plantadas</p>
+                </div>
+                <div class="impacto-card" data-value="85000">
+                    <i class="fas fa-tint"></i>
+                    <h3 class="impacto-number">0</h3>
+                    <p>Litros de água economizados</p>
+                </div>
+                <div class="impacto-card" data-value="320">
+                    <i class="fas fa-solar-panel"></i>
+                    <h3 class="impacto-number">0</h3>
+                    <p>Fazendas sustentáveis</p>
+                </div>
+                <div class="impacto-card" data-value="25000">
+                    <i class="fas fa-seedling"></i>
+                    <h3 class="impacto-number">0</h3>
+                    <p>Toneladas de CO₂ evitadas</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Newsletter / Contato -->
-    <section id="contato" class="newsletter">
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
         <div class="container">
-            <div class="newsletter-content">
-                <h2>Junte-se a essa <span class="highlight">revolução verde</span></h2>
-                <p>Receba novidades, dicas sustentáveis e cases de sucesso diretamente no seu e-mail.</p>
-                <form id="newsletterForm" class="newsletter-form">
-                    <input type="email" id="emailInput" placeholder="Seu melhor e-mail" required>
-                    <button type="submit">Inscrever-se</button>
-                </form>
-                <div id="formMessage" class="form-message"></div>
+            <div class="blog-header">
+                <span class="section-tag">Blog & Notícias</span>
+                <h2 class="section-title">Fique por dentro das<br><span class="gradient-text">novidades do agro sustentável</span></h2>
+            </div>
+            <div class="blog-grid" id="blogGrid"></div>
+            <div class="blog-loading" id="blogLoading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i> Carregando posts...
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-box">
+                <div class="newsletter-content">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <h3>Receba nosso conteúdo exclusivo</h3>
+                    <p>Insights, cases de sucesso e tendências do agro sustentável diretamente no seu email.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Seu melhor e-mail" id="newsEmail" required>
+                        <button type="submit">Inscrever <i class="fas fa-paper-plane"></i></button>
+                    </form>
+                    <div class="newsletter-message" id="newsMessage"></div>
+                </div>
             </div>
         </div>
     </section>
@@ -111,16 +241,60 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <span class="logo-icon">🌾</span>
-                    <span>AgroForte Sustentável</span>
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <div class="footer-logo">
+                        <i class="fas fa-tractor"></i>
+                        <span>Agro<span>Forte</span></span>
+                    </div>
+                    <p>Cultivando um futuro onde a força do agro caminha lado a lado com a sustentabilidade.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-x-twitter"></i></a>
+                    </div>
                 </div>
-                <p class="footer-text">Cultivando o amanhã, respeitando o hoje.</p>
-                <p class="footer-copy">© 2025 Agro Forte - Todos os direitos reservados</p>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#sobre">Sobre</a></li>
+                        <li><a href="#solucoes">Soluções</a></li>
+                        <li><a href="#impacto">Impacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Recursos</h4>
+                    <ul>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Cases de Sucesso</a></li>
+                        <li><a href="#">Relatórios</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contato</h4>
+                    <p><i class="fas fa-phone"></i> (11) 98765-4321</p>
+                    <p><i class="fas fa-envelope"></i> contato@agroforte.com</p>
+                    <p><i class="fas fa-map-marker-alt"></i> São Paulo, SP</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AgroForte - Todos os direitos reservados</p>
             </div>
         </div>
     </footer>
+
+    <!-- Modal Vídeo -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-video">
+                <iframe id="videoIframe" width="100%" height="400" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
