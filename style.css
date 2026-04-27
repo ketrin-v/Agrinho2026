@@ -10,25 +10,35 @@
     --primary-light: #40916c;
     --secondary: #d4a373;
     --dark: #1a2a1f;
-    --light: #f4f9f4;
+    --light: #e8f5e9;
+    --light-card: #ffffff;
     --gray: #6c757d;
     --white: #ffffff;
     --shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
     --transition: all 0.3s ease;
+    --bg-green: #d4e6d4;
+    --bg-green-light: #e2f0e2;
+    --bg-green-dark: #c0dcc0;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     color: var(--dark);
-    background: var(--light);
+    background: linear-gradient(135deg, var(--bg-green) 0%, var(--bg-green-light) 50%, var(--bg-green) 100%);
+    background-attachment: fixed;
     overflow-x: hidden;
 }
 
 body.dark {
     --light: #1a1a2e;
+    --light-card: #2a2a3e;
     --dark: #f4f9f4;
-    background: #1a1a2e;
+    --bg-green: #0d2b1f;
+    --bg-green-light: #143624;
+    --bg-green-dark: #0a2318;
+    background: linear-gradient(135deg, var(--bg-green) 0%, var(--bg-green-light) 50%, var(--bg-green-dark) 100%);
+    background-attachment: fixed;
     color: var(--dark);
 }
 
@@ -342,11 +352,11 @@ body.dark .mobile-menu {
 }
 
 .hero-wave svg path {
-    fill: var(--light);
+    fill: var(--bg-green);
 }
 
 body.dark .hero-wave svg path {
-    fill: #1a1a2e;
+    fill: var(--bg-green-dark);
 }
 
 /* Section Styles */
@@ -365,6 +375,7 @@ body.dark .hero-wave svg path {
     font-size: 40px;
     font-weight: 700;
     margin-bottom: 40px;
+    color: var(--dark);
 }
 
 .gradient-text {
@@ -377,6 +388,7 @@ body.dark .hero-wave svg path {
 /* Sobre Section */
 .sobre {
     padding: 80px 0;
+    background: transparent;
 }
 
 .sobre-header {
@@ -390,6 +402,10 @@ body.dark .hero-wave svg path {
     gap: 50px;
 }
 
+.sobre-text p {
+    color: var(--dark);
+}
+
 .features {
     display: flex;
     flex-direction: column;
@@ -401,7 +417,7 @@ body.dark .hero-wave svg path {
     display: flex;
     gap: 15px;
     padding: 20px;
-    background: var(--white);
+    background: var(--light-card);
     border-radius: 15px;
     box-shadow: var(--shadow);
     cursor: pointer;
@@ -445,7 +461,7 @@ body.dark .feature {
 
 .circle-bg {
     fill: none;
-    stroke: #e0e0e0;
+    stroke: rgba(0,0,0,0.1);
     stroke-width: 8;
 }
 
@@ -473,14 +489,15 @@ body.dark .feature {
     display: block;
 }
 
+.stat-circle-content span:not(.percent) {
+    font-size: 12px;
+    color: var(--dark);
+}
+
 /* Soluções Grid */
 .solucoes {
     padding: 80px 0;
-    background: var(--white);
-}
-
-body.dark .solucoes {
-    background: #22223b;
+    background: transparent;
 }
 
 .solucoes-header {
@@ -495,7 +512,7 @@ body.dark .solucoes {
 }
 
 .solucao-card {
-    background: var(--light);
+    background: var(--light-card);
     border-radius: 15px;
     overflow: hidden;
     transition: var(--transition);
@@ -527,6 +544,12 @@ body.dark .solucoes {
 .solucao-title {
     font-size: 20px;
     margin-bottom: 10px;
+    color: var(--dark);
+}
+
+.solucao-content p {
+    color: var(--dark);
+    opacity: 0.8;
 }
 
 /* Impacto Section */
@@ -576,6 +599,7 @@ body.dark .solucoes {
 /* Blog Section */
 .blog {
     padding: 80px 0;
+    background: transparent;
 }
 
 .blog-header {
@@ -590,7 +614,7 @@ body.dark .solucoes {
 }
 
 .blog-card {
-    background: var(--white);
+    background: var(--light-card);
     border-radius: 15px;
     overflow: hidden;
     transition: var(--transition);
@@ -601,10 +625,6 @@ body.dark .solucoes {
 .blog-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 25px 40px -10px rgba(0,0,0,0.15);
-}
-
-body.dark .blog-card {
-    background: #2a2a3e;
 }
 
 .blog-img {
@@ -626,6 +646,7 @@ body.dark .blog-card {
 .blog-title {
     font-size: 18px;
     margin-bottom: 10px;
+    color: var(--dark);
 }
 
 .blog-excerpt {
@@ -807,7 +828,7 @@ body.dark .blog-card {
     cursor: pointer;
 }
 
-/* Modal Card - Para conteúdo dos cards */
+/* Modal Card */
 .modal-card {
     display: none;
     position: fixed;
@@ -832,7 +853,7 @@ body.dark .blog-card {
 }
 
 .modal-card-content {
-    background: var(--white);
+    background: var(--light-card);
     border-radius: 20px;
     max-width: 900px;
     width: 90%;
@@ -851,10 +872,6 @@ body.dark .blog-card {
         transform: translateY(0);
         opacity: 1;
     }
-}
-
-body.dark .modal-card-content {
-    background: #2a2a3e;
 }
 
 .modal-card-close {
@@ -909,6 +926,7 @@ body.dark .modal-card-content {
 .modal-card-text p {
     margin-bottom: 20px;
     line-height: 1.8;
+    color: var(--dark);
 }
 
 .modal-benefits {
@@ -932,6 +950,7 @@ body.dark .modal-card-content {
     padding: 8px 0;
     padding-left: 25px;
     position: relative;
+    color: var(--dark);
 }
 
 .modal-benefits li:before {
