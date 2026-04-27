@@ -3,33 +3,33 @@ window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     setTimeout(() => {
         preloader.classList.add('hide');
-    }, 1000);
+    }, 1500);
 });
 
-// Theme Toggle
-const themeToggle = document.getElementById('themeToggle');
-const body = document.body;
+// AOS Animation
+AOS.init({
+    duration: 800,
+    once: true,
+    offset: 100
+});
 
-themeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark');
-    const icon = themeToggle.querySelector('i');
-    if (body.classList.contains('dark')) {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
+// Header Scroll
+const header = document.getElementById('header');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+        header.classList.add('scrolled');
     } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
+        header.classList.remove('scrolled');
     }
 });
 
 // Mobile Menu
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileBtn = document.getElementById('mobileBtn');
 const mobileMenu = document.getElementById('mobileMenu');
-const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
-mobileMenuBtn.addEventListener('click', () => {
+mobileBtn.addEventListener('click', () => {
     mobileMenu.classList.toggle('active');
-    const icon = mobileMenuBtn.querySelector('i');
+    const icon = mobileBtn.querySelector('i');
     if (mobileMenu.classList.contains('active')) {
         icon.classList.remove('fa-bars');
         icon.classList.add('fa-times');
@@ -39,15 +39,27 @@ mobileMenuBtn.addEventListener('click', () => {
     }
 });
 
-mobileNavLinks.forEach(link => {
+// Close mobile menu on link click
+document.querySelectorAll('.mobile-menu a').forEach(link => {
     link.addEventListener('click', () => {
         mobileMenu.classList.remove('active');
-        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
-        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+        mobileBtn.querySelector('i').classList.remove('fa-times');
+        mobileBtn.querySelector('i').classList.add('fa-bars');
     });
 });
 
-// Active Nav Link on Scroll
+// Smooth Scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// Active Nav Link
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-link');
 
@@ -56,7 +68,7 @@ window.addEventListener('scroll', () => {
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
-        if (scrollY >= sectionTop - 200) {
+        if (window.scrollY >= sectionTop - 300) {
             current = section.getAttribute('id');
         }
     });
@@ -69,557 +81,276 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// Smooth Scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-        }
-    });
-});
-
-// Animate Number function
-function animateNumber(element, target, suffix = '') {
-    let current = 0;
-    const increment = target / 50;
-    const updateNumber = () => {
-        current += increment;
-        if (current < target) {
-            element.textContent = Math.floor(current) + suffix;
-            requestAnimationFrame(updateNumber);
-        } else {
-            element.textContent = target + suffix;
-        }
-    };
-    updateNumber();
-}
-
-// Animate Impact Numbers
-const impactCards = document.querySelectorAll('.impacto-card');
-let impactAnimated = false;
-
-function animateImpactNumbers() {
-    if (impactAnimated) return;
+// Animate Numbers
+function animateNumbers() {
+    const numberElements = document.querySelectorAll('.stat-number[data-target], .dado-number[data-target]');
     
-    const triggerBottom = window.innerHeight * 0.8;
-    const impactoSection = document.querySelector('.impacto');
-    const sectionTop = impactoSection.getBoundingClientRect().top;
-    
-    if (sectionTop < triggerBottom) {
-        impactCards.forEach(card => {
-            const target = parseInt(card.getAttribute('data-value'));
-            const numberElement = card.querySelector('.impacto-number');
-            animateNumber(numberElement, target, '');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                const target = parseInt(element.getAttribute('data-target'));
+                let current = 0;
+                const increment = target / 60;
+                const suffix = element.classList.contains('stat-number') ? '%' : '';
+                
+                const updateNumber = () => {
+                    current += increment;
+                    if (current < target) {
+                        element.textContent = Math.floor(current) + suffix;
+                        requestAnimationFrame(updateNumber);
+                    } else {
+                        element.textContent = target + suffix;
+                    }
+                };
+                updateNumber();
+                observer.unobserve(element);
+            }
         });
-        impactAnimated = true;
-    }
+    }, { threshold: 0.5 });
+    
+    numberElements.forEach(el => observer.observe(el));
 }
 
-// Hero Stats Animation
-const heroStats = document.querySelector('.hero-stats-card');
-let heroAnimated = false;
-
-function animateHeroStats() {
-    if (heroAnimated) return;
+// Animate Bar Charts
+function animateBars() {
+    const bars = document.querySelectorAll('.barra-progresso');
     
-    const triggerBottom = window.innerHeight * 0.6;
-    const heroTop = heroStats.getBoundingClientRect().top;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                const percent = parseInt(bar.getAttribute('data-percent'));
+                bar.style.width = percent + '%';
+                observer.unobserve(bar);
+            }
+        });
+    }, { threshold: 0.5 });
     
-    if (heroTop < triggerBottom) {
-        animateNumber(document.getElementById('stat1'), 1250, '+');
-        animateNumber(document.getElementById('stat2'), 45, '%');
-        animateNumber(document.getElementById('stat3'), 60, '%');
-        heroAnimated = true;
-    }
+    bars.forEach(bar => observer.observe(bar));
 }
 
-// Soluções Data
-const solucoesData = [
+// Práticas Data (conteúdo verídico)
+const praticasData = [
     {
-        id: 'irrigacao',
-        icon: 'fa-droplet',
-        title: 'Irrigação Inteligente',
-        description: 'Sistema automatizado que economiza até 60% de água usando sensores de umidade do solo.',
-        image: 'https://images.unsplash.com/photo-1530268729831-4b0b9e170218?w=600&h=400&fit=crop',
-        fullDescription: 'A Irrigação Inteligente utiliza sensores de umidade do solo, estações meteorológicas e algoritmos de IA para determinar exatamente quando e quanto água aplicar nas plantações. Isso reduz o desperdício em até 60%, aumenta a produtividade e preserva os recursos hídricos.',
-        benefits: [
-            'Economia de até 60% no consumo de água',
-            'Aumento médio de 25% na produtividade',
-            'Redução de custos com energia elétrica',
-            'Monitoramento remoto via smartphone',
-            'Prevenção de doenças por excesso de água'
-        ]
-    },
-    {
-        id: 'drones',
-        icon: 'fa-microchip',
-        title: 'Monitoramento com Drones',
-        description: 'Mapeamento aéreo para identificar pragas, nutrição do solo e otimizar colheitas.',
-        image: 'https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=600&h=400&fit=crop',
-        fullDescription: 'Drones equipados com câmeras multiespectrais e sensores térmicos sobrevoam as lavouras coletando dados precisos sobre saúde das plantas, pragas, deficiências nutricionais e estresse hídrico. Os dados são processados por IA que gera mapas de prescrição para aplicação localizada de insumos.',
-        benefits: [
-            'Redução de 30% no uso de defensivos',
-            'Identificação precoce de pragas e doenças',
-            'Mapeamento de produtividade em tempo real',
-            'Economia de tempo e mão de obra',
-            'Aplicação localizada de insumos'
-        ]
-    },
-    {
-        id: 'energia',
-        icon: 'fa-solar-panel',
-        title: 'Energia Limpa no Campo',
-        description: 'Soluções em energia solar e biogás para reduzir custos e emissões.',
-        image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&h=400&fit=crop',
-        fullDescription: 'Implementamos sistemas de energia solar fotovoltaica e biodigestores que transformam resíduos orgânicos em biogás e biofertilizantes. Isso reduz a dependência de energia da rede elétrica, diminui os custos operacionais e elimina emissões de gases de efeito estufa.',
-        benefits: [
-            'Redução de até 90% na conta de energia',
-            'Aproveitamento de resíduos da propriedade',
-            'Geração de créditos de carbono',
-            'Independência energética',
-            'Valorização do imóvel rural'
-        ]
-    }
-];
-
-function createSolucoes() {
-    const grid = document.getElementById('solucoesGrid');
-    if (!grid) return;
-    
-    solucoesData.forEach(sol => {
-        const card = document.createElement('div');
-        card.className = 'solucao-card';
-        card.setAttribute('data-card-type', 'solucao');
-        card.setAttribute('data-card-id', sol.id);
-        card.innerHTML = `
-            <img src="${sol.image}" alt="${sol.title}" class="solucao-img">
-            <div class="solucao-content">
-                <i class="fas ${sol.icon} solucao-icon"></i>
-                <h3 class="solucao-title">${sol.title}</h3>
-                <p>${sol.description}</p>
-            </div>
-        `;
-        card.addEventListener('click', () => openCardModal(sol));
-        grid.appendChild(card);
-    });
-}
-
-// Blog Data
-const blogPosts = [
-    {
-        id: 'blog1',
-        title: 'Agricultura Regenerativa: O futuro do campo',
-        excerpt: 'Descubra como técnicas regenerativas estão transformando solos degradados em áreas produtivas.',
-        date: '15 Mar 2025',
-        image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=400&fit=crop',
-        fullDescription: 'A agricultura regenerativa vai além da sustentabilidade - ela busca restaurar ativamente a saúde dos solos, aumentar a biodiversidade e melhorar o ciclo da água. Técnicas como plantio direto, rotação de culturas, integração lavoura-pecuária-floresta (ILPF) e uso de bioinsumos estão revolucionando a produção agrícola.',
-        benefits: [
-            'Sequestro de carbono no solo',
-            'Aumento da matéria orgânica',
-            'Melhor retenção de água',
-            'Redução da erosão',
-            'Maior resiliência climática'
-        ]
-    },
-    {
-        id: 'blog2',
-        title: 'Tecnologia e Sustentabilidade andam juntas',
-        excerpt: 'Startups brasileiras desenvolvem soluções inovadoras para o agro sustentável.',
-        date: '10 Mar 2025',
+        id: 'plantio-direto',
+        icon: 'fa-tractor',
+        title: 'Plantio Direto',
+        description: 'Técnica que revolucionou a agricultura brasileira, mantendo a palhada da safra anterior sobre o solo, evitando erosão e aumentando matéria orgânica.',
         image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0a7cc2?w=600&h=400&fit=crop',
-        fullDescription: 'O Brasil é destaque mundial em AgTechs - startups que aplicam tecnologia ao agronegócio. Soluções como sensores IoT para monitoramento remoto, plataformas de rastreabilidade blockchain, softwares de gestão agrícola e mercados digitais estão democratizando o acesso à agricultura de precisão.',
+        fullDescription: 'O Plantio Direto é uma técnica conservacionista que consiste em semear sem preparar o solo, mantendo a cobertura vegetal da safra anterior. Isso protege o solo da erosão, aumenta a infiltração de água, sequestra carbono e melhora a fertilidade.',
         benefits: [
-            'Gestão mais eficiente da propriedade',
-            'Transparência na cadeia produtiva',
-            'Redução de perdas pós-colheita',
-            'Acesso a novas oportunidades de mercado',
-            'Integração de toda a cadeia produtiva'
-        ]
+            'Redução da erosão do solo em até 90%',
+            'Economia de água no solo',
+            'Aumento da matéria orgânica',
+            'Redução de 50% no consumo de combustível',
+            'Sequestro de carbono na palhada'
+        ],
+        stats: '15 milhões de hectares adotam o sistema no Brasil',
+        source: 'Fonte: Embrapa Soja'
     },
     {
-        id: 'blog3',
-        title: 'Certificações ambientais valorizam o produto',
-        excerpt: 'Produtores que adotam práticas sustentáveis têm acesso a mercados premium.',
-        date: '05 Mar 2025',
-        image: 'https://images.unsplash.com/photo-1574943320219-553eb213f72b?w=600&h=400&fit=crop',
-        fullDescription: 'Certificações como Rainforest Alliance, Orgânico Brasil e Carbono Neutro abrem portas para mercados internacionais e consumidores dispostos a pagar mais por produtos sustentáveis. Além do benefício ambiental, produtores certificados conseguem melhores preços e acesso a linhas de crédito especiais.',
+        id: 'ilpf',
+        icon: 'fa-tree',
+        title: 'Integração Lavoura-Pecuária-Floresta (ILPF)',
+        description: 'Sistema que integra produção de grãos, animais e árvores na mesma área, melhorando o solo e gerando renda o ano todo.',
+        image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=400&fit=crop',
+        fullDescription: 'A ILPF é uma estratégia de produção sustentável que integra componentes agrícolas, pecuários e florestais em mesmo espaço, em consórcio, sucessão ou rotação. Os benefícios incluem recuperação de pastagens degradadas, bem-estar animal e diversificação de renda.',
         benefits: [
-            'Agregação de valor ao produto',
-            'Acesso a mercados internacionais',
-            'Linhas de crédito com juros reduzidos',
-            'Reconhecimento da marca',
-            'Diferencial competitivo'
-        ]
+            'Recuperação de pastagens degradadas',
+            'Sombra para os animais (bem-estar)',
+            'Diversificação da renda no campo',
+            'Sequestro de carbono pelas árvores',
+            'Melhoria da fertilidade do solo'
+        ],
+        stats: 'Mais de 15 milhões de hectares com ILPF no Brasil',
+        source: 'Fonte: Rede ILPF / Embrapa'
+    },
+    {
+        id: 'irrigacao-inteligente',
+        icon: 'fa-droplet',
+        title: 'Irrigação por Gotejamento',
+        description: 'Tecnologia que economiza até 70% de água em comparação com métodos tradicionais de irrigação.',
+        image: 'https://images.unsplash.com/photo-1530268729831-4b0b9e170218?w=600&h=400&fit=crop',
+        fullDescription: 'A irrigação por gotejamento leva água diretamente à raiz da planta, gota a gota, eliminando perdas por evaporação e escoamento. Essa tecnologia é essencial para regiões com escassez hídrica e para culturas de alto valor agregado.',
+        benefits: [
+            'Economia de 50-70% de água',
+            'Maior eficiência na aplicação',
+            'Redução de ervas daninhas',
+            'Menor incidência de doenças foliares',
+            'Aplicação simultânea de fertilizantes'
+        ],
+        stats: '70% menos água que irrigação convencional',
+        source: 'Fonte: FAO / Embrapa'
+    },
+    {
+        id: 'abc',
+        icon: 'fa-cloud-sun',
+        title: 'Plano ABC (Agricultura de Baixo Carbono)',
+        description: 'Programa brasileiro que incentiva práticas sustentáveis e já evitou a emissão de 170 milhões de toneladas de CO₂.',
+        image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop',
+        fullDescription: 'O Plano ABC é uma política pública brasileira que financia e incentiva tecnologias sustentáveis no campo, como recuperação de pastagens, ILPF, plantio direto, fixação biológica de nitrogênio e florestas plantadas.',
+        benefits: [
+            '170 milhões de toneladas de CO₂ evitadas',
+            '50 milhões de hectares de pastagens recuperadas',
+            'Redução do desmatamento',
+            'Geração de créditos de carbono',
+            'Acesso a crédito com juros reduzidos'
+        ],
+        stats: 'R$ 8,7 bilhões em financiamentos sustentáveis',
+        source: 'Fonte: MAPA - Plano ABC'
     }
 ];
 
-function createBlogPosts() {
-    const grid = document.getElementById('blogGrid');
+function createPraticas() {
+    const grid = document.getElementById('praticasGrid');
     if (!grid) return;
     
-    blogPosts.forEach(post => {
+    praticasData.forEach(pratica => {
         const card = document.createElement('div');
-        card.className = 'blog-card';
-        card.setAttribute('data-card-type', 'blog');
-        card.setAttribute('data-card-id', post.id);
+        card.className = 'pratica-card';
         card.innerHTML = `
-            <img src="${post.image}" alt="${post.title}" class="blog-img">
-            <div class="blog-content">
-                <div class="blog-date">📅 ${post.date}</div>
-                <h3 class="blog-title">${post.title}</h3>
-                <p class="blog-excerpt">${post.excerpt}</p>
+            <img src="${pratica.image}" alt="${pratica.title}" class="pratica-img">
+            <div class="pratica-content">
+                <i class="fas ${pratica.icon} pratica-icon"></i>
+                <h3 class="pratica-title">${pratica.title}</h3>
+                <p class="pratica-description">${pratica.description}</p>
+                <div class="pratica-stats">
+                    <p>📊 ${pratica.stats}</p>
+                </div>
+                <div class="pratica-source">${pratica.source}</div>
             </div>
         `;
-        card.addEventListener('click', () => openBlogModal(post));
+        card.addEventListener('click', () => openModal(pratica));
         grid.appendChild(card);
     });
 }
 
-// Dados para os cards de Impacto
-const impactosData = {
-    arvores: {
-        title: 'Programa de Reflorestamento',
-        icon: 'fa-tree',
-        image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=600&h=400&fit=crop',
-        description: 'Nosso programa de reflorestamento já plantou mais de 1.200 árvores nativas em áreas degradadas, restaurando ecossistemas e criando corredores ecológicos que conectam fragmentos florestais.',
-        benefits: [
-            'Restauração de nascentes e rios',
-            'Aumento da biodiversidade local',
-            'Sequestro de carbono da atmosfera',
-            'Proteção do solo contra erosão',
-            'Geração de renda para comunidades locais'
-        ]
-    },
-    agua: {
-        title: 'Economia de Água na Agricultura',
-        icon: 'fa-tint',
-        image: 'https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?w=600&h=400&fit=crop',
-        description: 'Através de sistemas de irrigação por gotejamento, captação de água da chuva e reuso de água, economizamos mais de 85.000 litros de água por ano em nossas propriedades parceiras.',
-        benefits: [
-            'Preservação de mananciais',
-            'Redução do estresse hídrico',
-            'Aumento da eficiência hídrica',
-            'Economia de até 70% na conta de água',
-            'Captação e armazenamento de água de chuva'
-        ]
-    },
-    fazendas: {
-        title: 'Fazendas Sustentáveis Certificadas',
-        icon: 'fa-solar-panel',
-        image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=600&h=400&fit=crop',
-        description: 'Atualmente, 320 fazendas já adotaram nosso modelo de produção sustentável, combinando tecnologia de precisão, energia renovável e manejo regenerativo do solo.',
-        benefits: [
-            'Aumento médio de 35% na produtividade',
-            'Redução de custos operacionais',
-            'Acesso a mercados premium',
-            'Certificação socioambiental',
-            'Valorização da propriedade'
-        ]
-    },
-    co2: {
-        title: 'Redução de Emissões de CO₂',
-        icon: 'fa-seedling',
-        image: 'https://images.unsplash.com/photo-1441974231531-c622288dbd6f?w=600&h=400&fit=crop',
-        description: 'Com a substituição de fontes fósseis por energia limpa e práticas de agricultura de baixo carbono, evitamos a emissão de mais de 25.000 toneladas de CO₂ na atmosfera - o equivalente a plantar 175.000 árvores!',
-        benefits: [
-            'Combate às mudanças climáticas',
-            'Créditos de carbono comercializáveis',
-            'Independência de combustíveis fósseis',
-            'Participação no mercado de carbono',
-            'Contribuição para as metas do Acordo de Paris'
-        ]
-    }
-};
+// Modal Function
+const modal = document.getElementById('cardModal');
+const modalClose = document.querySelector('.modal-card-close');
 
-// Função para abrir modal dos cards de impacto
-function openImpactoModal(cardType) {
-    const data = impactosData[cardType];
-    if (!data) return;
-    
-    const modal = document.getElementById('cardModal');
+function openModal(pratica) {
     const modalIcon = document.getElementById('modalIcon');
     const modalTitle = document.getElementById('modalTitle');
     const modalImage = document.getElementById('modalImage');
     const modalDescription = document.getElementById('modalDescription');
     const modalBenefits = document.getElementById('modalBenefits');
+    const modalSource = document.getElementById('modalSource');
     
-    modalIcon.className = `fas ${data.icon}`;
-    modalTitle.textContent = data.title;
-    modalImage.src = data.image;
-    modalDescription.textContent = data.description;
+    modalIcon.className = `fas ${pratica.icon}`;
+    modalTitle.textContent = pratica.title;
+    modalImage.src = pratica.image;
+    modalDescription.textContent = pratica.fullDescription;
     
     modalBenefits.innerHTML = '';
-    data.benefits.forEach(benefit => {
+    pratica.benefits.forEach(benefit => {
         const li = document.createElement('li');
         li.textContent = benefit;
         modalBenefits.appendChild(li);
     });
     
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-// Função para abrir modal dos cards de solução
-function openCardModal(solucao) {
-    const modal = document.getElementById('cardModal');
-    const modalIcon = document.getElementById('modalIcon');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalImage = document.getElementById('modalImage');
-    const modalDescription = document.getElementById('modalDescription');
-    const modalBenefits = document.getElementById('modalBenefits');
-    
-    modalIcon.className = `fas ${solucao.icon}`;
-    modalTitle.textContent = solucao.title;
-    modalImage.src = solucao.image;
-    modalDescription.textContent = solucao.fullDescription;
-    
-    modalBenefits.innerHTML = '';
-    solucao.benefits.forEach(benefit => {
-        const li = document.createElement('li');
-        li.textContent = benefit;
-        modalBenefits.appendChild(li);
-    });
+    modalSource.innerHTML = `<i class="fas fa-database"></i> ${pratica.source}`;
     
     modal.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
-
-// Função para abrir modal dos cards de blog
-function openBlogModal(blog) {
-    const modal = document.getElementById('cardModal');
-    const modalIcon = document.getElementById('modalIcon');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalImage = document.getElementById('modalImage');
-    const modalDescription = document.getElementById('modalDescription');
-    const modalBenefits = document.getElementById('modalBenefits');
-    
-    modalIcon.className = 'fas fa-newspaper';
-    modalTitle.textContent = blog.title;
-    modalImage.src = blog.image;
-    modalDescription.textContent = blog.fullDescription;
-    
-    modalBenefits.innerHTML = '';
-    blog.benefits.forEach(benefit => {
-        const li = document.createElement('li');
-        li.textContent = benefit;
-        modalBenefits.appendChild(li);
-    });
-    
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-// Fechar modal
-const modalCard = document.getElementById('cardModal');
-const modalCardClose = document.querySelector('.modal-card-close');
-const modalActionBtn = document.getElementById('modalActionBtn');
 
 function closeModal() {
-    modalCard.classList.remove('active');
+    modal.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
 
-modalCardClose.addEventListener('click', closeModal);
-modalCard.addEventListener('click', (e) => {
-    if (e.target === modalCard) closeModal();
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
 });
 
-modalActionBtn.addEventListener('click', () => {
-    alert('🌱 Obrigado pelo interesse! Entraremos em contato em breve com mais informações.');
-    closeModal();
-});
+// Comparativo Data
+const comparativoData = [
+    { pais: 'Brasil', producao: '+403%', preservacao: '66%', area: '30%' },
+    { pais: 'Estados Unidos', producao: '+180%', preservacao: '41%', area: '+15%' },
+    { pais: 'China', producao: '+250%', preservacao: '23%', area: '+42%' },
+    { pais: 'Índia', producao: '+220%', preservacao: '24%', area: '+38%' },
+    { pais: 'União Europeia', producao: '+90%', preservacao: '35%', area: '-5%' }
+];
 
-// Newsletter Form
-const newsletterForm = document.getElementById('newsletterForm');
-const newsEmail = document.getElementById('newsEmail');
-const newsMessage = document.getElementById('newsMessage');
-
-newsletterForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = newsEmail.value.trim();
+function createComparativo() {
+    const grid = document.getElementById('comparativoGrid');
+    if (!grid) return;
     
-    if (email && email.includes('@') && email.includes('.')) {
-        newsMessage.innerHTML = '✅ Inscrição realizada! Você receberá nossas novidades.';
-        newsMessage.style.color = '#a8c686';
-        newsEmail.value = '';
-        setTimeout(() => {
-            newsMessage.innerHTML = '';
-        }, 3000);
-    } else {
-        newsMessage.innerHTML = '❌ Por favor, insira um e-mail válido.';
-        newsMessage.style.color = '#ff9999';
-        setTimeout(() => {
-            newsMessage.innerHTML = '';
-        }, 3000);
-    }
-});
-
-// Video Modal
-const videoBtn = document.getElementById('videoBtn');
-const videoModal = document.getElementById('videoModal');
-const modalClose = document.querySelector('.modal-close');
-const videoIframe = document.getElementById('videoIframe');
-
-videoBtn.addEventListener('click', () => {
-    videoModal.classList.add('active');
-    videoIframe.src = 'https://www.youtube.com/embed/8fCkfT3GZ3Y?autoplay=1';
-});
-
-modalClose.addEventListener('click', () => {
-    videoModal.classList.remove('active');
-    videoIframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ';
-});
-
-videoModal.addEventListener('click', (e) => {
-    if (e.target === videoModal) {
-        videoModal.classList.remove('active');
-        videoIframe.src = 'https://www.youtube.com/embed/dQw4w9WgXcQ';
-    }
-});
-
-// Explorar Button
-const explorarBtn = document.getElementById('explorarBtn');
-explorarBtn.addEventListener('click', () => {
-    document.getElementById('solucoes').scrollIntoView({ behavior: 'smooth' });
-});
-
-// Adicionar eventos de clique nos cards de impacto
-document.querySelectorAll('.impacto-card').forEach(card => {
-    const cardType = card.getAttribute('data-card');
-    card.addEventListener('click', () => openImpactoModal(cardType));
-});
-
-// Adicionar eventos de clique nas features (sobre section)
-const features = document.querySelectorAll('.feature');
-const featuresData = {
-    regenerativa: {
-        title: 'Agricultura Regenerativa',
-        icon: 'fa-leaf',
-        image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=400&fit=crop',
-        description: 'A Agricultura Regenerativa é um sistema de produção que vai além da sustentabilidade, buscando ativamente restaurar a saúde do solo, aumentar a biodiversidade e melhorar o ciclo da água. Técnicas como plantio direto, rotação de culturas, integração lavoura-pecuária-floresta (ILPF) e uso de bioinsumos são fundamentais.',
-        benefits: [
-            'Sequestro de carbono no solo',
-            'Aumento da matéria orgânica',
-            'Melhor retenção e infiltração de água',
-            'Redução significativa da erosão',
-            'Maior resiliência a eventos climáticos extremos'
-        ]
-    },
-    tecnologia: {
-        title: 'Tecnologia de Precisão',
-        icon: 'fa-microchip',
-        image: 'https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=600&h=400&fit=crop',
-        description: 'A Tecnologia de Precisão utiliza sensores, drones, imagens de satélite e inteligência artificial para monitorar cada metro quadrado da lavoura. Isso permite aplicar insumos apenas onde necessário, reduzindo desperdícios e aumentando a eficiência produtiva.',
-        benefits: [
-            'Redução de 30% no uso de fertilizantes',
-            'Economia de 25% em defensivos agrícolas',
-            'Aumento médio de 35% na produtividade',
-            'Identificação precoce de problemas',
-            'Redução do impacto ambiental'
-        ]
-    },
-    certificacao: {
-        title: 'Certificação Socioambiental',
-        icon: 'fa-hand-holding-heart',
-        image: 'https://images.unsplash.com/photo-1542838132-92c5331f1278?w=600&h=400&fit=crop',
-        description: 'Nossas certificações garantem que os produtos são cultivados com respeito ao meio ambiente e aos trabalhadores. Elas abrem portas para mercados internacionais e consumidores que valorizam a sustentabilidade.',
-        benefits: [
-            'Agregação de valor ao produto final',
-            'Acesso a mercados premium internacionais',
-            'Linhas de crédito com juros reduzidos',
-            'Reconhecimento e valorização da marca',
-            'Diferencial competitivo no mercado'
-        ]
-    }
-};
-
-features.forEach(feature => {
-    const featureType = feature.getAttribute('data-feature');
-    feature.addEventListener('click', () => {
-        const data = featuresData[featureType];
-        if (data) {
-            const modal = document.getElementById('cardModal');
-            const modalIcon = document.getElementById('modalIcon');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalImage = document.getElementById('modalImage');
-            const modalDescription = document.getElementById('modalDescription');
-            const modalBenefits = document.getElementById('modalBenefits');
-            
-            modalIcon.className = `fas ${data.icon}`;
-            modalTitle.textContent = data.title;
-            modalImage.src = data.image;
-            modalDescription.textContent = data.description;
-            
-            modalBenefits.innerHTML = '';
-            data.benefits.forEach(benefit => {
-                const li = document.createElement('li');
-                li.textContent = benefit;
-                modalBenefits.appendChild(li);
-            });
-            
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
+    comparativoData.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'comparativo-card';
+        card.innerHTML = `
+            <div class="comparativo-pais">${item.pais}</div>
+            <div class="comparativo-producao">${item.producao}</div>
+            <div class="comparativo-label">crescimento na produção</div>
+            <div class="comparativo-preservacao">${item.preservacao}</div>
+            <div class="comparativo-label">de território preservado</div>
+            <div style="font-size: 12px; color: var(--gray); margin-top: 12px;">Área plantada: ${item.area}</div>
+        `;
+        grid.appendChild(card);
     });
-});
+}
 
-// Scroll Animations
-window.addEventListener('scroll', () => {
-    animateHeroStats();
-    animateImpactNumbers();
-});
-
-// Header Scroll Effect
-const header = document.getElementById('header');
-let lastScroll = 0;
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    if (currentScroll > 100) {
-        header.style.background = 'rgba(255,255,255,0.98)';
-        header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)';
-    } else {
-        header.style.background = 'rgba(255,255,255,0.95)';
-        header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.05)';
+// Fontes Data
+const fontesData = [
+    {
+        nome: 'Embrapa',
+        descricao: 'Dados históricos da agricultura brasileira, produtividade e tecnologias sustentáveis',
+        link: 'https://www.embrapa.br'
+    },
+    {
+        nome: 'MAPA - Ministério da Agricultura',
+        descricao: 'Programa ABC, Plano Safra, dados oficiais do agronegócio brasileiro',
+        link: 'https://www.gov.br/agricultura'
+    },
+    {
+        nome: 'FAO - Organização das Nações Unidas',
+        descricao: 'Dados sobre segurança alimentar e agricultura sustentável global',
+        link: 'https://www.fao.org'
+    },
+    {
+        nome: 'IBGE - Censo Agropecuário',
+        descricao: 'Estatísticas oficiais sobre área plantada, produção e uso do solo no Brasil',
+        link: 'https://www.ibge.gov.br'
+    },
+    {
+        nome: 'Observatório do Clima',
+        descricao: 'Dados sobre emissões de CO₂ e preservação do território brasileiro',
+        link: 'https://www.observatoriodoclima.eco.br'
+    },
+    {
+        nome: 'Rede ILPF',
+        descricao: 'Informações sobre Integração Lavoura-Pecuária-Floresta no Brasil',
+        link: 'https://www.redeilpf.org.br'
     }
-    
-    if (body.classList.contains('dark')) {
-        if (currentScroll > 100) {
-            header.style.background = 'rgba(26,26,46,0.98)';
-        } else {
-            header.style.background = 'rgba(26,26,46,0.95)';
-        }
-    }
-    
-    lastScroll = currentScroll;
-});
+];
 
-// Intersection Observer for Fade In
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
+function createFontes() {
+    const grid = document.getElementById('fontesGrid');
+    if (!grid) return;
+    
+    fontesData.forEach(fonte => {
+        const card = document.createElement('div');
+        card.className = 'fonte-card';
+        card.innerHTML = `
+            <div class="fonte-nome">${fonte.nome}</div>
+            <div class="fonte-descricao">${fonte.descricao}</div>
+            <a href="${fonte.link}" target="_blank" class="fonte-link">
+                Acessar fonte oficial <i class="fas fa-external-link-alt"></i>
+            </a>
+        `;
+        grid.appendChild(card);
     });
-}, observerOptions);
-
-document.querySelectorAll('.solucao-card, .blog-card, .impacto-card, .feature').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(30px)';
-    el.style.transition = 'all 0.6s ease-out';
-    observer.observe(el);
-});
+}
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
-    createSolucoes();
-    createBlogPosts();
+    createPraticas();
+    createComparativo();
+    createFontes();
+    animateNumbers();
+    animateBars();
 });
