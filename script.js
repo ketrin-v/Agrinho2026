@@ -142,7 +142,7 @@ const solucoesData = [
         icon: 'fa-droplet',
         title: 'Irrigação Inteligente',
         description: 'Sistema automatizado que economiza até 60% de água usando sensores de umidade do solo.',
-        image: 'https://images.unsplash.com/photo-1530268729831-4b0b9e170218?w=400&h=200&fit=crop',
+        image: 'https://images.unsplash.com/photo-1530268729831-4b0b9e170218?w=600&h=400&fit=crop',
         fullDescription: 'A Irrigação Inteligente utiliza sensores de umidade do solo, estações meteorológicas e algoritmos de IA para determinar exatamente quando e quanto água aplicar nas plantações. Isso reduz o desperdício em até 60%, aumenta a produtividade e preserva os recursos hídricos.',
         benefits: [
             'Economia de até 60% no consumo de água',
@@ -157,7 +157,7 @@ const solucoesData = [
         icon: 'fa-microchip',
         title: 'Monitoramento com Drones',
         description: 'Mapeamento aéreo para identificar pragas, nutrição do solo e otimizar colheitas.',
-        image: 'https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=400&h=200&fit=crop',
+        image: 'https://images.unsplash.com/photo-1527977966376-1c8408f9f108?w=600&h=400&fit=crop',
         fullDescription: 'Drones equipados com câmeras multiespectrais e sensores térmicos sobrevoam as lavouras coletando dados precisos sobre saúde das plantas, pragas, deficiências nutricionais e estresse hídrico. Os dados são processados por IA que gera mapas de prescrição para aplicação localizada de insumos.',
         benefits: [
             'Redução de 30% no uso de defensivos',
@@ -172,7 +172,7 @@ const solucoesData = [
         icon: 'fa-solar-panel',
         title: 'Energia Limpa no Campo',
         description: 'Soluções em energia solar e biogás para reduzir custos e emissões.',
-        image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=400&h=200&fit=crop',
+        image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&h=400&fit=crop',
         fullDescription: 'Implementamos sistemas de energia solar fotovoltaica e biodigestores que transformam resíduos orgânicos em biogás e biofertilizantes. Isso reduz a dependência de energia da rede elétrica, diminui os custos operacionais e elimina emissões de gases de efeito estufa.',
         benefits: [
             'Redução de até 90% na conta de energia',
@@ -213,7 +213,7 @@ const blogPosts = [
         title: 'Agricultura Regenerativa: O futuro do campo',
         excerpt: 'Descubra como técnicas regenerativas estão transformando solos degradados em áreas produtivas.',
         date: '15 Mar 2025',
-        image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&h=200&fit=crop',
+        image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=400&fit=crop',
         fullDescription: 'A agricultura regenerativa vai além da sustentabilidade - ela busca restaurar ativamente a saúde dos solos, aumentar a biodiversidade e melhorar o ciclo da água. Técnicas como plantio direto, rotação de culturas, integração lavoura-pecuária-floresta (ILPF) e uso de bioinsumos estão revolucionando a produção agrícola.',
         benefits: [
             'Sequestro de carbono no solo',
@@ -228,7 +228,7 @@ const blogPosts = [
         title: 'Tecnologia e Sustentabilidade andam juntas',
         excerpt: 'Startups brasileiras desenvolvem soluções inovadoras para o agro sustentável.',
         date: '10 Mar 2025',
-        image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0a7cc2?w=400&h=200&fit=crop',
+        image: 'https://images.unsplash.com/photo-1592982537447-6f2a6a0a7cc2?w=600&h=400&fit=crop',
         fullDescription: 'O Brasil é destaque mundial em AgTechs - startups que aplicam tecnologia ao agronegócio. Soluções como sensores IoT para monitoramento remoto, plataformas de rastreabilidade blockchain, softwares de gestão agrícola e mercados digitais estão democratizando o acesso à agricultura de precisão.',
         benefits: [
             'Gestão mais eficiente da propriedade',
@@ -243,7 +243,7 @@ const blogPosts = [
         title: 'Certificações ambientais valorizam o produto',
         excerpt: 'Produtores que adotam práticas sustentáveis têm acesso a mercados premium.',
         date: '05 Mar 2025',
-        image: 'https://images.unsplash.com/photo-1574943320219-553eb213f72b?w=400&h=200&fit=crop',
+        image: 'https://images.unsplash.com/photo-1574943320219-553eb213f72b?w=600&h=400&fit=crop',
         fullDescription: 'Certificações como Rainforest Alliance, Orgânico Brasil e Carbono Neutro abrem portas para mercados internacionais e consumidores dispostos a pagar mais por produtos sustentáveis. Além do benefício ambiental, produtores certificados conseguem melhores preços e acesso a linhas de crédito especiais.',
         benefits: [
             'Agregação de valor ao produto',
