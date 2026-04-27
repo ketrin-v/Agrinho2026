@@ -404,6 +404,13 @@ body.dark .hero-wave svg path {
     background: var(--white);
     border-radius: 15px;
     box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.feature:hover {
+    transform: translateX(5px);
+    box-shadow: 0 25px 40px -10px rgba(0,0,0,0.15);
 }
 
 body.dark .feature {
@@ -493,10 +500,12 @@ body.dark .solucoes {
     overflow: hidden;
     transition: var(--transition);
     box-shadow: var(--shadow);
+    cursor: pointer;
 }
 
 .solucao-card:hover {
     transform: translateY(-10px);
+    box-shadow: 0 30px 50px -15px rgba(0,0,0,0.2);
 }
 
 .solucao-img {
@@ -545,6 +554,7 @@ body.dark .solucoes {
     border-radius: 15px;
     backdrop-filter: blur(10px);
     transition: var(--transition);
+    cursor: pointer;
 }
 
 .impacto-card:hover {
@@ -585,14 +595,16 @@ body.dark .solucoes {
     overflow: hidden;
     transition: var(--transition);
     box-shadow: var(--shadow);
-}
-
-body.dark .blog-card {
-    background: #2a2a3e;
+    cursor: pointer;
 }
 
 .blog-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 25px 40px -10px rgba(0,0,0,0.15);
+}
+
+body.dark .blog-card {
+    background: #2a2a3e;
 }
 
 .blog-img {
@@ -760,7 +772,7 @@ body.dark .blog-card {
     border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-/* Modal */
+/* Modal Vídeo */
 .modal {
     display: none;
     position: fixed;
@@ -793,6 +805,158 @@ body.dark .blog-card {
     font-size: 40px;
     color: var(--white);
     cursor: pointer;
+}
+
+/* Modal Card - Para conteúdo dos cards */
+.modal-card {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 2001;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-card.active {
+    display: flex;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-card-content {
+    background: var(--white);
+    border-radius: 20px;
+    max-width: 900px;
+    width: 90%;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideUp 0.4s ease;
+}
+
+@keyframes slideUp {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+body.dark .modal-card-content {
+    background: #2a2a3e;
+}
+
+.modal-card-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 35px;
+    cursor: pointer;
+    color: var(--gray);
+    transition: var(--transition);
+    z-index: 10;
+}
+
+.modal-card-close:hover {
+    color: var(--primary);
+}
+
+.modal-card-header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    padding: 30px;
+    border-radius: 20px 20px 0 0;
+    text-align: center;
+    color: var(--white);
+}
+
+.modal-card-header i {
+    font-size: 60px;
+    margin-bottom: 15px;
+}
+
+.modal-card-header h2 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.modal-card-body {
+    padding: 30px;
+}
+
+.modal-card-body img {
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.modal-card-text h3 {
+    color: var(--primary);
+    margin-bottom: 15px;
+    font-size: 22px;
+}
+
+.modal-card-text p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+}
+
+.modal-benefits {
+    background: rgba(var(--primary-rgb), 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+}
+
+.modal-benefits h4 {
+    margin-bottom: 10px;
+    color: var(--primary);
+}
+
+.modal-benefits ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.modal-benefits li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+}
+
+.modal-benefits li:before {
+    content: "🌱";
+    position: absolute;
+    left: 0;
+}
+
+.btn-modal-action {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn-modal-action:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
 }
 
 /* Responsive */
@@ -842,5 +1006,9 @@ body.dark .blog-card {
     
     .social-links {
         justify-content: center;
+    }
+    
+    .modal-card-header h2 {
+        font-size: 22px;
     }
 }
